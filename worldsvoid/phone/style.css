@@ -1,0 +1,211 @@
+/* --- VOID OS SMARTPHONE UI --- */
+#phone-wrapper { 
+    position: absolute; 
+    bottom: 0px; 
+    right: 20px; 
+    width: 320px; 
+    height: 650px; 
+    /* Push it down by its total height minus 50px (so 50px peeks out) */
+    transform: translateY(calc(100% - 50px)); 
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+    z-index: 1000;
+    cursor: pointer; 
+}
+
+/* When the phone is opened */
+#phone-wrapper.active {
+    transform: translateY(0);
+    cursor: default;
+}
+
+/* LAYER 1: Wallpaper (Bottom) */
+.phone-screen-bg {
+    position: absolute; 
+    top: 3%;     
+    left: 4.5%; 
+    width: 91%; 
+    height: 94%; 
+    background: url('images/smart_phone_bg1.png') no-repeat center center; 
+    background-size: cover;
+    border-radius: 25px; 
+    z-index: 1;
+}
+
+/* LAYER 2: Interactive Content (Middle) */
+.phone-content-area { 
+    position: absolute; 
+    top: 3%;     
+    left: 4.5%; 
+    width: 91%; 
+    height: 94%; 
+    border-radius: 25px; 
+    display: flex; 
+    flex-direction: column;
+    pointer-events: auto; 
+    overflow: hidden;
+    align-items: center; 
+    z-index: 2;
+}
+
+/* LAYER 3: Frame Overlay (Top) */
+#phone-frame-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('images/frame.png') no-repeat center center;
+    background-size: 100% 100%;
+    z-index: 3;
+    pointer-events: none; /* MAGIC TRICK: Lets mouse clicks pass through! */
+}
+
+/* App Grid Container */
+#phone-home-screen { 
+    display: grid; 
+    grid-template-columns: repeat(3, 64px); 
+    grid-auto-rows: 64px; 
+    gap: 20px; 
+    padding-top: 50px; 
+    width: 100%;
+    justify-content: center; 
+}
+
+/* Individual App Icons */
+.app-icon { 
+    width: 64px; 
+    height: 64px;
+    cursor: pointer; 
+    transition: transform 0.1s, filter 0.1s; 
+    border-radius: 16px; 
+    box-shadow: 0 4px 6px rgba(0,0,0,0.5);
+    object-fit: cover; 
+    outline: none; 
+    -webkit-tap-highlight-color: transparent; 
+}
+
+.app-icon:hover { 
+    transform: scale(1.1); 
+    filter: brightness(1.2); 
+}
+
+.app-icon:active {
+    transform: scale(0.95);
+    filter: brightness(0.8);
+}
+
+/* --- NEW SETTINGS APP STYLES --- */
+#phone-settings-screen {
+    display: none; 
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.85); 
+    padding: 20px;
+    color: white;
+    overflow-y: auto; 
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+#phone-settings-screen h3 {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.settings-view {
+    display: none;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+.settings-view.active {
+    display: flex;
+}
+
+.settings-menu-item {
+    background: #222;
+    padding: 16px;
+    margin-bottom: 12px;
+    border-radius: 12px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #333;
+    font-weight: bold;
+    transition: 0.2s;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.settings-menu-item:hover {
+    background: #333;
+    border-color: #00f3ff;
+}
+
+.settings-btn {
+    padding: 12px;
+    background: #333;
+    border: none;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    font-weight: bold;
+    outline: none;
+    margin-bottom: 20px;
+}
+
+.about-card {
+    background: #222; 
+    padding: 18px; 
+    border-radius: 12px; 
+    font-size: 0.9em; 
+    line-height: 1.8;
+    border: 1px solid #333;
+}
+
+.bg-thumbnail-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.bg-thumbnail {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 3px solid transparent;
+    cursor: pointer;
+    transition: border 0.2s;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.bg-thumbnail:hover {
+    border-color: #00f3ff;
+}
+
+/* Bottom Nav Bar */
+.phone-nav {
+    margin-top: auto;
+    padding: 15px;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    text-align: center;
+    backdrop-filter: blur(5px);
+    box-sizing: border-box;
+}
+
+.home-bar {
+    width: 40%;
+    height: 5px;
+    background: #fff;
+    border-radius: 5px;
+    margin: 0 auto;
+    cursor: pointer;
+}

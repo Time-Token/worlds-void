@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Worlds Void - Client Alpha</title>
+    <style>
+        body {
+            background-color: #0d0d0d;
+            color: #00ff00;
+            font-family: 'Courier New', Courier, monospace;
+            padding: 20px;
+        }
+        #console-box {
+            border: 1px solid #00ff00;
+            padding: 15px;
+            width: 80%;
+            height: 400px;
+            overflow-y: scroll;
+            background-color: #000;
+        }
+        .log { margin: 5px 0; }
+        .client-msg { color: #00aaaa; }
+        .server-msg { color: #ffaa00; }
+        .error-msg { color: #ff0000; }
+    </style>
+</head>
+<body>
+
+    <h1>Worlds Void - Terminal Link</h1>
+    <div id="console-box"></div>
+
+    <script>
+        const consoleBox = document.getElementById('console-box');
+
+        function logToScreen(message, type = 'log') {
+            const time = new Date().toLocaleTimeString();
+            consoleBox.innerHTML += `<div class="${type}">[${time}] ${message}</div>`;
+            consoleBox.scrollTop = consoleBox.scrollHeight; // Auto-scroll to bottom
+        }
+
+        logToScreen('Initializing connection to server...', 'client-msg');
+
+        // 1. Connect to your Node.js WebSocket Server
+        const ws = new WebSocket('ws://localhost:8080');
+
+        // 2. When the connection opens, send the handshake payload
+        ws.onopen = () => {
+            logToScreen('✅ WebSocket connection established.', 'client-msg');
+            
+            const payload = { action: 'hello', client: 'WebBrowser' };
+            logToScreen(`Sending payload: ${JSON.stringify(payload)}`, 'client-msg');
+            ws.send(JSON.stringify(payload));
+        };
+
+        // 3. Listen for the server's reply
+        ws.onmessage = (event) => {
+            const response = JSON.parse(event.data);
+            logToScreen(`📨 Server Response: ${response.message}`, 'server-msg');
+        };
+
+        // 4. Handle disconnects or errors
+        ws.onclose = () => {
+            logToScreen('🔴 Connection to Worlds Void lost.', 'error-msg');
+        };
+
+        ws.onerror = (error) => {
+            logToScreen('❌ WebSocket Error observed.', 'error-msg');
+        };
+    </script>
+
+</body>
+</html>
